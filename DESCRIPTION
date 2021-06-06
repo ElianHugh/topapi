@@ -2,16 +2,24 @@ Package: topapi
 Title: What the Package Does (One Line, Title Case)
 Version: 0.0.0.9000
 Authors@R: 
-    person(given = "First",
-           family = "Last",
+    person(given = "Elian",
+           family = "Thiele-Evans",
            role = c("aut", "cre"),
-           email = "first.last@example.com",
-           comment = c(ORCID = "YOUR-ORCID-ID"))
+           email = "elianhte@gmail.com",
+           comment = c(ORCID = "0000-0001-8008-3165"))
 Description: What the package does (one paragraph).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
+License: GPL (>= 3)
 Encoding: UTF-8
+LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1.9001
 Imports: 
-    enumr
+    enumr (>= 0.0.1),
+    httr,
+    readr,
+    stringdist
+Remotes: 
+    ElianHugh/enumr
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3

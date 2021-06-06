@@ -1,2 +1,10 @@
+^pkgdown$
 ^topapi\.Rproj$
+^_pkgdown\.yml$
 ^\.Rproj\.user$
+^\.github$
+^LICENSE\.md$
+^CODE_OF_CONDUCT\.md$
+^\.vscode$
+^vignettes/articles$
+^codecov\.yml$

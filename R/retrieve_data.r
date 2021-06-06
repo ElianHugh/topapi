@@ -1,44 +1,20 @@
-# TOP data is stored in a csv
-data_url <- "https://osf.io/qatkz/download"
-pkg_env <- new.env()
-
-level_detail <- enumr::enum(
-    minimal = "minimal",
-    detailed = "detailed"
-)
-
-retrieve_data <- function() {
-    if (is.null(pkg_env$data)) {
-        response <- httr::RETRY(
-            "GET",
-            url = data_url,
-            type = httr::content_type("text/csv")
-        )
-        pkg_env$response <- response
-        pkg_env$data <- suppressMessages(
-            httr::content(response, encoding = "utf8")
-        )
-    }
-}
-
-set_detail <- function(data, level) {
-    if (level == level_detail$minimal) {
-        data <- data[
-            c(
-                "Journal",
-                "Issn",
-                "Publisher",
-                names(data[grep("score", names(data), ignore.case = TRUE)])
-            )
-        ]
-    }
-    data
-}
+#' Find journal policy scores
+#'
+#' @description
+#' A description
+#' @param x character or numeric vector
+#' @param exact_match
+#' whether only return exact matches, or use input as a sub-string
+#' @param detail level of detail to return, either "minimal" or NULL
+#' @name find_journals
+#' @importFrom stats complete.cases
+NULL
 
 #' @export
+#' @rdname find_journals
 journal_name <- function(x, exact_match = TRUE, detail = level_detail$minimal) {
     retrieve_data()
-    data <- set_detail(pkg_env$data, detail)
+    data <- set_detail(top_env$data, detail)
 
     if (exact_match) {
         ret <- data[data$Journal == x, ]
@@ -50,12 +26,13 @@ journal_name <- function(x, exact_match = TRUE, detail = level_detail$minimal) {
 }
 
 #' @export
+#' @rdname find_journals
 journal_issn <- function(x, exact_match = TRUE, detail = level_detail$minimal) {
     retrieve_data()
-    data <- set_detail(pkg_env$data, detail)
+    data <- set_detail(top_env$data, detail)
 
     # Silently convert ISSNs into appropriate format
-    if (is.numeric(x)) {
+    if (nchar(x) == 8 && (is.numeric(x) || !grepl("-", x))) {
         x <- sub("^(.{4})(.*)$", "\\1-\\2", x)
     }
 
@@ -69,9 +46,10 @@ journal_issn <- function(x, exact_match = TRUE, detail = level_detail$minimal) {
 }
 
 #' @export
+#' @rdname find_journals
 publisher_name <- function(x, exact_match = TRUE, detail = level_detail$minimal) {
     retrieve_data()
-    data <- set_detail(pkg_env$data, detail)
+    data <- set_detail(top_env$data, detail)
 
     if (exact_match) {
         ret <- data[data$Publisher == x, ]
@@ -83,7 +61,29 @@ publisher_name <- function(x, exact_match = TRUE, detail = level_detail$minimal)
 }
 
 #' @export
-data <- function() {
+full_data <- function() {
     retrieve_data()
-    return(pkg_env$data)
+    return(top_env$data)
+}
+
+# Misc -------------------------------------------------------------------------
+
+level_detail <- enumr::enum(
+    minimal = "minimal",
+    detailed = "detailed"
+)
+
+set_detail <- function(data, level) {
+    if (level == level_detail$minimal) {
+        data <- data[
+            c(
+                "Journal",
+                "Issn",
+                "Publisher",
+                names(data[grep("score", names(data), ignore.case = TRUE)]),
+                "Total"
+            )
+        ]
+    }
+    data
 }
