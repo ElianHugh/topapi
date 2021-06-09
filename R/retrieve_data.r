@@ -35,11 +35,11 @@ journal_name <- function(x, exact_match = TRUE, detail = level_detail$minimal) {
 
 name_helper <- function(x, exact_match, data) {
     if (exact_match) {
-        ret <- data[data$Journal == x, ]
-        return(ret[complete.cases(ret$Journal), ])
+        ret <- data[data$Title == x, ]
+        return(ret[complete.cases(ret$Title), ])
     } else {
-        ret <- data[grep(x, data$Journal, ignore.case = TRUE), ]
-        return(ret[complete.cases(ret$Journal), ])
+        ret <- data[grep(x, data$Title, ignore.case = TRUE), ]
+        return(ret[complete.cases(ret$Title), ])
     }
 }
 
@@ -70,11 +70,11 @@ issn_helper <- function(x, exact_match, data) {
         x <- sub("^(.{4})(.*)$", "\\1-\\2", x)
     }
     if (exact_match) {
-        ret <- data[data$Issn == x, ]
-        return(ret[complete.cases(ret$Issn), ])
+        ret <- data[data$ISSN == x, ]
+        return(ret[complete.cases(ret$ISSN), ])
     } else {
-        ret <- data[grep(x, data$Issn, ignore.case = TRUE), ]
-        return(ret[complete.cases(ret$Issn), ])
+        ret <- data[grep(x, data$ISSN, ignore.case = TRUE), ]
+        return(ret[complete.cases(ret$ISSN), ])
     }
 }
 
@@ -114,11 +114,13 @@ publisher_helper <- function(x, exact_match, data) {
 #' Returns the full TOP factor dataset
 #' as a tibble
 #'
+#' @param detail of detail of returned tibble, NULL for all columns
 #' @return tibble
 #' @export
-full_data <- function() {
+full_data <- function(detail = level_detail$minimal) {
     retrieve_data()
-    return(top_env$data)
+    data <- set_detail(top_env$data, detail)
+    return(data)
 }
 
 # Misc -------------------------------------------------------------------------
@@ -129,11 +131,14 @@ level_detail <- enumr::enum(
 )
 
 set_detail <- function(data, level) {
+    colnames(data)[colnames(data) == "Journal"] <- "Title"
+    colnames(data)[colnames(data) == "Issn"] <- "ISSN"
+
     if (level == level_detail$minimal) {
         data <- data[
             c(
-                "Journal",
-                "Issn",
+                "Title",
+                "ISSN",
                 "Publisher",
                 names(data[grep("score", names(data), ignore.case = TRUE)]),
                 "Total"

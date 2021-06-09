@@ -4,7 +4,10 @@
 \alias{full_data}
 \title{Get TOP factor data}
 \usage{
-full_data()
+full_data(detail = level_detail$minimal)
+}
+\arguments{
+\item{detail}{of detail of returned tibble, NULL for all columns}
 }
 \value{
 tibble
