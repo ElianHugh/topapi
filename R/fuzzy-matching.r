@@ -50,7 +50,7 @@ find_helper <- function(input, comparison, max_distance, method) {
         expr = {
             # code
             if (fuzzy_name$distance > max_distance) {
-                return(NA)
+                return(NULL)
             }
 
             possible_journal <- top_env$data[
