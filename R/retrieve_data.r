@@ -18,6 +18,22 @@ journal_name <- function(x, exact_match = TRUE, detail = level_detail$minimal) {
     retrieve_data()
     data <- set_detail(top_env$data, detail)
 
+    # is x scalar?
+    if (length(x) == 1) {
+        name_helper(x, exact_match, data)
+    } else {
+        return(
+            purrr::map2_dfr(
+                .x = x,
+                .y = exact_match,
+                name_helper,
+                data
+            )
+        )
+    }
+}
+
+name_helper <- function(x, exact_match, data) {
     if (exact_match) {
         ret <- data[data$Journal == x, ]
         return(ret[complete.cases(ret$Journal), ])
@@ -33,11 +49,26 @@ journal_issn <- function(x, exact_match = TRUE, detail = level_detail$minimal) {
     retrieve_data()
     data <- set_detail(top_env$data, detail)
 
+    # is x scalar?
+    if (length(x) == 1) {
+        issn_helper(x, exact_match, data)
+    } else {
+        return(
+            purrr::map2_dfr(
+                .x = x,
+                .y = exact_match,
+                issn_helper,
+                data
+            )
+        )
+    }
+}
+
+issn_helper <- function(x, exact_match, data) {
     # Silently convert ISSNs into appropriate format
     if (nchar(x) == 8 && (is.numeric(x) || !grepl("-", x))) {
         x <- sub("^(.{4})(.*)$", "\\1-\\2", x)
     }
-
     if (exact_match) {
         ret <- data[data$Issn == x, ]
         return(ret[complete.cases(ret$Issn), ])
@@ -53,6 +84,22 @@ publisher_name <- function(x, exact_match = TRUE, detail = level_detail$minimal)
     retrieve_data()
     data <- set_detail(top_env$data, detail)
 
+    # is x scalar?
+    if (length(x) == 1) {
+        publisher_helper(x, exact_match, data)
+    } else {
+        return(
+            purrr::map2_dfr(
+                .x = x,
+                .y = exact_match,
+                publisher_helper,
+                data
+            )
+        )
+    }
+}
+
+publisher_helper <- function(x, exact_match, data) {
     if (exact_match) {
         ret <- data[data$Publisher == x, ]
         return(ret[complete.cases(ret$Publisher), ])

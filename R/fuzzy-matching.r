@@ -15,9 +15,29 @@
 #' the maximum valid string distance the returned input can be
 #' @export
 find_journal <- function(input, method = "osa", max_distance = 3) {
+    retrieve_data()
+
     comparison <- data.frame(
         journal_names = top_env$data$Journal
     )
+
+    # is x scalar?
+    if (length(input) == 1) {
+        find_helper(input, comparison, max_distance, method)
+    } else {
+        return(
+            purrr::map_dfr(
+                .x = input,
+                .f = find_helper,
+                comparison,
+                max_distance,
+                method
+            )
+        )
+    }
+}
+
+find_helper <- function(input, comparison, max_distance, method) {
     comparison$distance <- stringdist::stringdist(
         a = comparison$journal_names,
         b = input,
@@ -29,7 +49,9 @@ find_journal <- function(input, method = "osa", max_distance = 3) {
     tryCatch(
         expr = {
             # code
-            if (fuzzy_name$distance > max_distance) return(NA)
+            if (fuzzy_name$distance > max_distance) {
+                return(NA)
+            }
 
             possible_journal <- top_env$data[
                 top_env$data$Journal == fuzzy_name$journal_names,
