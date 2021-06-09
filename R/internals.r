@@ -1,4 +1,3 @@
-data_url <- "https://osf.io/qatkz/download"
 OSF_id <- "qatkz"
 top_env <- new.env()
 

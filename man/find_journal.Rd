@@ -6,6 +6,18 @@
 \usage{
 find_journal(input, method = "osa", max_distance = 3)
 }
-\description{
+\arguments{
+\item{input}{the string to check}
 
+\item{method}{the method for measuring string distance, see
+?stringdist::stringdist-metrics for more information}
+
+\item{max_distance}{the maximum valid string distance the returned input can be}
+}
+\description{
+Search the TOP dataset for journals that are within a certain
+string distance of the input string.
+
+Generally useful for finding journals that may have typos or
+regional differences in naming.
 }

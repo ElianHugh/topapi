@@ -16,10 +16,12 @@ publisher_name(x, exact_match = TRUE, detail = level_detail$minimal)
 \arguments{
 \item{x}{character or numeric vector}
 
-\item{exact_match}{whether only return exact matches, or use input as a sub-string}
+\item{exact_match}{whether to only return exact matches, or use input as a sub-string
+for grepping}
 
 \item{detail}{level of detail to return, either "minimal" or NULL}
 }
 \description{
-A description
+Find journals in the TOP dataset, through either the journal name,
+ISSN, or publisher name.
 }

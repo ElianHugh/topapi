@@ -1,10 +1,12 @@
 #' Find journal policy scores
 #'
 #' @description
-#' A description
+#' Find journals in the TOP dataset, through either the journal name,
+#' ISSN, or publisher name.
 #' @param x character or numeric vector
 #' @param exact_match
-#' whether only return exact matches, or use input as a sub-string
+#' whether to only return exact matches, or use input as a sub-string
+#' for grepping
 #' @param detail level of detail to return, either "minimal" or NULL
 #' @name find_journals
 #' @importFrom stats complete.cases
@@ -60,6 +62,12 @@ publisher_name <- function(x, exact_match = TRUE, detail = level_detail$minimal)
     }
 }
 
+#' Get TOP factor data
+#'
+#' Returns the full TOP factor dataset
+#' as a tibble
+#'
+#' @return tibble
 #' @export
 full_data <- function() {
     retrieve_data()

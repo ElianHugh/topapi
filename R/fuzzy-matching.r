@@ -1,7 +1,18 @@
 #' Find journals through fuzzy matching
 #'
 #' @description
+#' Search the TOP dataset for journals that are within a certain
+#' string distance of the input string.
 #'
+#' Generally useful for finding journals that may have typos or
+#' regional differences in naming.
+#'
+#' @param input the string to check
+#' @param method
+#' the method for measuring string distance, see
+#' ?stringdist::stringdist-metrics for more information
+#' @param max_distance
+#' the maximum valid string distance the returned input can be
 #' @export
 find_journal <- function(input, method = "osa", max_distance = 3) {
     comparison <- data.frame(
@@ -16,7 +27,7 @@ find_journal <- function(input, method = "osa", max_distance = 3) {
     fuzzy_name <- comparison[which.min(comparison$distance), ]
 
     tryCatch(
-        {
+        expr = {
             # code
             if (fuzzy_name$distance > max_distance) return(NA)
 
