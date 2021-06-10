@@ -1,12 +1,19 @@
-OSF_id <- "qatkz"
+# contains the TOP dataset,
+# and is accessed by topapi's
+# contributed methods
 top_env <- new.env()
 
-data_url <- function() {
-    sprintf(
-        "https://osf.io/%s/download",
-        OSF_id
+endpoint <- enumr::enum(
+    id = "qatkz",
+    download = sprintf(
+            "https://osf.io/%s/download",
+            .$id
+    ),
+    file = sprintf(
+            "https://api.osf.io/v2/files/%s/?format=jsonapi",
+            .$id
     )
-}
+)
 
 data_structure <- enumr::enum(
     DataCitation = "DataCitationScore",
@@ -25,7 +32,7 @@ retrieve_data <- function() {
     if (is.null(top_env$data)) {
         response <- httr::RETRY(
             "GET",
-            url = data_url(),
+            url = endpoint$download,
             type = httr::content_type("text/csv")
         )
         check_http_status(response)
@@ -34,6 +41,9 @@ retrieve_data <- function() {
         top_env$data <- suppressMessages(
             httr::content(response, encoding = "utf8")
         )
+
+        colnames(top_env$data)[colnames(top_env$data) == "Journal"] <- "Title"
+        colnames(top_env$data)[colnames(top_env$data) == "Issn"] <- "ISSN"
 
         for (i in names(top_env$data[grep("score", names(top_env$data), ignore.case = TRUE)])) {
             x <- switch(i,
@@ -50,6 +60,7 @@ retrieve_data <- function() {
             )
             names(top_env$data)[names(top_env$data) == i] <- x
         }
+
         lockEnvironment(top_env, bindings = TRUE)
     }
 }

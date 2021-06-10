@@ -18,7 +18,7 @@ find_journal <- function(input, method = "osa", max_distance = 3) {
     retrieve_data()
 
     comparison <- data.frame(
-        journal_names = top_env$data$Journal
+        journal_names = top_env$data$Title
     )
 
     # is x scalar?
@@ -54,13 +54,13 @@ find_helper <- function(input, comparison, max_distance, method) {
             }
 
             possible_journal <- top_env$data[
-                top_env$data$Journal == fuzzy_name$journal_names,
+                top_env$data$Title == fuzzy_name$journal_names,
             ]
             message(
                 sprintf(
                     "Input was: %s,\nMatch was: %s,\nString distance of: %s",
                     input,
-                    possible_journal$Journal,
+                    possible_journal$Title,
                     fuzzy_name$distance
                 )
             )

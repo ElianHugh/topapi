@@ -131,8 +131,6 @@ level_detail <- enumr::enum(
 )
 
 set_detail <- function(data, level) {
-    colnames(data)[colnames(data) == "Journal"] <- "Title"
-    colnames(data)[colnames(data) == "Issn"] <- "ISSN"
 
     if (level == level_detail$minimal) {
         data <- data[

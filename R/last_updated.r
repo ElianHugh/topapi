@@ -8,7 +8,7 @@
 last_updated <- function() {
     # get timestamp
     response <- httr::GET(
-        url = sprintf("https://api.osf.io/v2/files/%s/?format=jsonapi", OSF_id),
+        url = endpoint$file,
         httr::accept_json()
     )
     check_http_status(response)
