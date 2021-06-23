@@ -14,7 +14,7 @@ journal_issn(x, exact_match = TRUE, detail = level_detail$minimal)
 publisher_name(x, exact_match = TRUE, detail = level_detail$minimal)
 }
 \arguments{
-\item{x}{character or numeric vector}
+\item{x}{character or numeric vector, can be length > 1}
 
 \item{exact_match}{whether to only return exact matches, or use input as a sub-string
 for grepping}

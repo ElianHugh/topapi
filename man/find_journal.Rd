@@ -7,7 +7,7 @@
 find_journal(input, method = "osa", max_distance = 3)
 }
 \arguments{
-\item{input}{the string to check}
+\item{input}{the string to check, can be length > 1}
 
 \item{method}{the method for measuring string distance, see
 ?stringdist::stringdist-metrics for more information}

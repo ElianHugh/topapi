@@ -7,7 +7,7 @@
 #' Generally useful for finding journals that may have typos or
 #' regional differences in naming.
 #'
-#' @param input the string to check
+#' @param input the string to check, can be length > 1
 #' @param method
 #' the method for measuring string distance, see
 #' ?stringdist::stringdist-metrics for more information

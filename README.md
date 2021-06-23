@@ -1,12 +1,15 @@
+<!-- @format -->
 
 # topapi
 
 <!-- badges: start -->
+
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![R-CMD-check](https://github.com/ElianHugh/topapi/workflows/R-CMD-check/badge.svg)](https://github.com/ElianHugh/topapi/actions)
+
 <!-- badges: end -->
 
-Pseudo-API wrapper for the TOP factor dataset. Provides helper functions with interacting with the TOP dataset.
+Pseudo-API wrapper for the TOP factor dataset. Implements helper functions for interacting with the TOP dataset. Rather than manually downloading the dataset, the **topapi** package keeps the dataset in memory, meaning the data is both easily accessible and always up to date.
 
 ## Installation
 
@@ -18,13 +21,13 @@ install.packages("enumr", repos = 'https://elianhugh.r-universe.dev')
 
 You can install the released version of topapi from [R-universe](https://r-universe.dev/organizations/) with:
 
-``` r
+```r
 install.packages("topapi", repos = 'https://elianhugh.r-universe.dev')
 ```
 
 ## Examples
 
-``` r
+```r
 library(topapi)
 
 # Get data by journal name
@@ -48,3 +51,6 @@ publisher_name("Elsevier")
 publisher_name("Else", exact_match = FALSE)
 ```
 
+## Code of Conduct
+
+Please note that the topapi project is released with a [Contributor Code of Conduct](https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html). By contributing to this project, you agree to abide by its terms.

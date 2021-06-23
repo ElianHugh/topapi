@@ -23,7 +23,7 @@ test_that("exported methods function appropriately", {
     expect_s3_class(ret, "tbl_df")
     expect_gte(nrow(ret), 1)
 
-    ret <- full_data()
+    ret <- get_top_data()
     expect_s3_class(ret, "tbl_df")
     expect_gte(nrow(ret), 1)
 })

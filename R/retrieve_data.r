@@ -3,7 +3,7 @@
 #' @description
 #' Find journals in the TOP dataset, through either the journal name,
 #' ISSN, or publisher name.
-#' @param x character or numeric vector
+#' @param x character or numeric vector, can be length > 1
 #' @param exact_match
 #' whether to only return exact matches, or use input as a sub-string
 #' for grepping
@@ -117,7 +117,7 @@ publisher_helper <- function(x, exact_match, data) {
 #' @param detail of detail of returned tibble, NULL for all columns
 #' @return tibble
 #' @export
-full_data <- function(detail = level_detail$minimal) {
+get_top_data <- function(detail = level_detail$minimal) {
     retrieve_data()
     data <- set_detail(top_env$data, detail)
     return(data)
